@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/libs/jquery-1.11.0.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/libs/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/libs/moment.min.js') }}"></script>
+  <!--<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  <script>
+    $(document).ready(function () {
+      jenkinsDashboard.getData();
+      var auto_refresh = setInterval(function() {
+          jenkinsDashboard.getData();
+      }, 60000);
+    });
+  </script>-->
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="page-header">
+      <h2>{{title}}</h2>
+      <p>Rankings</p>
+    </div>
+  </div>
+</body>
+</html>
