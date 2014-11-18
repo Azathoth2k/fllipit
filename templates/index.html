@@ -4,37 +4,31 @@
         <meta charset="utf-8">
         <title>{{title}}</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.dataTables.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         <script src="{{ url_for('static', filename='js/libs/jquery-1.11.0.js') }}"></script>
         <script src="{{ url_for('static', filename='js/libs/bootstrap.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/libs/moment.min.js') }}"></script>
-        <!--<script src="{{ url_for('static', filename='js/app.js') }}"></script>
-        <script>
-        $(document).ready(function () {
-          jenkinsDashboard.getData();
-          var auto_refresh = setInterval(function() {
-              jenkinsDashboard.getData();
-          }, 60000);
+        <script src="{{ url_for('static', filename='js/libs/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+        <script type="text/javascript">
+        $(document).ready(function () { 
+            fllipit.getData();
+            var auto_refresh = setInterval(function() {
+                fllipit.getData();
+            }, 10000);
         });
-        </script>-->
+      </script>
     </head>
     <body>
         <div class="container-fluid">
             <div class="page-header">
                 <h2>{{title}}</h2>
-                <table>
-                    <tr>
-                        <th>Number</th>
-                        <th>Name</th>
-                        <th>Affiliation</th>
-                        <th>Round 1</th>
-                        <th>Round 2</th>
-                        <th>Round 3</th>
-                        <th>Best</th>
-                    </tr>
-                    <!-- what now -->
-                </table>
+                <h5 id="lastUpdate">Loading...</h5>
+                <div id="teams">
+                    Loading data...
+                </div>
             </div>
         </div>
     </body>
