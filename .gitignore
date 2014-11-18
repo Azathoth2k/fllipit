@@ -46,3 +46,6 @@ docs/_build/
 tmp/
 venv/
 *.sublime-*
+
+# Databases
+*.db
