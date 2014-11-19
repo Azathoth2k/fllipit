@@ -40,14 +40,14 @@ table.scroll tbody {
 
 table.scroll tbody td.numeric,
 table.scroll thead th.numeric {
-    width: 10%;
+    width: 8%;
     float: left;
     border-right: 1px solid white;
 }
 
 table.scroll tbody td.text,
 table.scroll thead th.text {
-    width: 25%;
+    width: 30%;
     float: left;
     border-right: 1px solid white;
 }
