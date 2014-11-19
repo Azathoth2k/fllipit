@@ -7,9 +7,9 @@ var fllipit = {
             "<tr><td>" + team.number + "</td>" +
             "<td>" + team.name + "</td>" +
             "<td>" + team.affiliation + "</td>" +
-            "<td>" + team.round0 + "</td>" +
             "<td>" + team.round1 + "</td>" +
             "<td>" + team.round2 + "</td>" +
+            "<td>" + team.round3 + "</td>" +
             "</tr>";
         
         return teamData;

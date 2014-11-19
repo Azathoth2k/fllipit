@@ -74,7 +74,6 @@ teamFields = {
     "number": fields.Integer,
     "name": fields.String,
     "affiliation": fields.String,
-    "round0": fields.Integer,
     "round1": fields.Integer,
     "round2": fields.Integer,
     "round3": fields.Integer,
