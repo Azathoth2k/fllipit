@@ -17,18 +17,20 @@ var fllipit = {
 
     // update the build-list HTML on the main page
     updateHtml: function (data) {
-        var tableData = "<table class='table table-striped'><tr>" + 
+        var tableData = "<table class='table table-striped'><tr>" +
+            "<thead>" +
             "<th>Number</th>" + 
             "<th>Name</th>" + 
             "<th>Affiliation</th>" + 
             "<th>Round 1</th>" + 
             "<th>Round 2</th>" + 
             "<th>Round 3</th>" + 
-            "</tr>";
+            "</tr>" +
+            "</thead><tbody>";
         $.each(data, function (i, team) {
             tableData += fllipit.getHtmlForSingleTeam(team);
         });
-        tableData += "</table>";
+        tableData += "</tbody></table>";
         $("div#teams").html(tableData);
         $("#lastUpdate").html('Last updated: ' + moment().format("MMMM DD YYYY, h:mm:ss a"));
     },
