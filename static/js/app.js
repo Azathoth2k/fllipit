@@ -4,12 +4,13 @@ var fllipit = {
     // build HTML for a single Jenkins build
     getHtmlForSingleTeam: function (team) {
         var teamData =
-            "<tr><td>" + team.number + "</td>" +
-            "<td>" + team.name + "</td>" +
-            "<td>" + team.affiliation + "</td>" +
-            "<td>" + team.round1 + "</td>" +
-            "<td>" + team.round2 + "</td>" +
-            "<td>" + team.round3 + "</td>" +
+            "<tr><td class='numeric'>" + team.number + "</td>" +
+            "<td class='text'>" + team.name + "</td>" +
+            "<td class='text'>" + team.affiliation + "</td>" +
+            "<td class='numeric'>" + team.round1 + "</td>" +
+            "<td class='numeric'>" + team.round2 + "</td>" +
+            "<td class='numeric'>" + team.round3 + "</td>" +
+            "<td class='numeric'>" + team.round4 + "</td>" +
             "</tr>";
         
         return teamData;
@@ -17,14 +18,15 @@ var fllipit = {
 
     // update the build-list HTML on the main page
     updateHtml: function (data) {
-        var tableData = "<table class='table table-striped'><tr>" +
-            "<thead>" +
-            "<th>Number</th>" + 
-            "<th>Name</th>" + 
-            "<th>Affiliation</th>" + 
-            "<th>Round 1</th>" + 
-            "<th>Round 2</th>" + 
-            "<th>Round 3</th>" + 
+        var tableData = "<table class='table table-striped scroll'>" +
+            "<thead><tr>" +
+            "<th class='numeric'>Number</th>" + 
+            "<th class='text'>Name</th>" + 
+            "<th class='text'>Affiliation</th>" + 
+            "<th class='numeric'>Round 1</th>" + 
+            "<th class='numeric'>Round 2</th>" + 
+            "<th class='numeric'>Round 3</th>" + 
+            "<th class='numeric'>Best</th>" + 
             "</tr>" +
             "</thead><tbody>";
         $.each(data, function (i, team) {
