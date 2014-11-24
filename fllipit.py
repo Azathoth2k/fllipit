@@ -7,6 +7,7 @@ from flask.ext.restful import Resource, Api, fields, marshal_with
 from flask.ext.conditional import conditional
 import urllib2
 import json
+import pypyodbc
 
 APP = Flask(__name__)
 APP.config.from_object('config')
@@ -50,20 +51,27 @@ class Team(DB.Model):
         advanceTo7=False
     ):
         """Construct a Team object using a name and URL."""
-        self.number = number
-        self.name = name
-        self.affiliation = affiliation
-        self.round1 = round1
-        self.round2 = round2
-        self.round3 = round3
-        self.round4 = round4
-        self.round5 = round5
-        self.round6 = round6
-        self.round7 = round7
-        self.advanceTo4 = advanceTo4
-        self.advanceTo5 = advanceTo5
-        self.advanceTo6 = advanceTo6
-        self.advanceTo7 = advanceTo7
+        self.number = self.fixInput(number)
+        self.name = self.fixInput(name)
+        self.affiliation = self.fixInput(affiliation)
+        self.round1 = self.fixInput(round1)
+        self.round2 = self.fixInput(round2)
+        self.round3 = self.fixInput(round3)
+        self.round4 = self.fixInput(round4)
+        self.round5 = self.fixInput(round5)
+        self.round6 = self.fixInput(round6)
+        self.round7 = self.fixInput(round7)
+        self.advanceTo4 = self.fixInput(advanceTo4)
+        self.advanceTo5 = self.fixInput(advanceTo5)
+        self.advanceTo6 = self.fixInput(advanceTo6)
+        self.advanceTo7 = self.fixInput(advanceTo7)
+        
+    def fixInput(self, data):
+        """Convert unicode data to ASCII."""
+        if isinstance(data, unicode):
+            return data.encode('ascii', 'ignore')
+        else:
+            return data
 
     # Convert project to string
     def toString(self):
@@ -94,7 +102,44 @@ class TeamList(Resource):
 
     @marshal_with(teamFields)
     def get(self):
-        teams = Team.query.all()
+        teams = []
+        if APP.config['TEST_DB']:
+            teams = Team.query.all()
+        else:
+            conn = pypyodbc.connect(
+                r"Driver={Microsoft Access Driver (*.mdb, *.accdb)};" + 
+                r"Dbq="+APP.config['DB_FILE']+";")
+           
+            cur = conn.cursor()
+            cur = conn.cursor()
+            cur.execute(
+                """
+                SELECT TeamNumber, TeamName, Affiliation, 
+                Trial1Score, Trial2Score, Trial3Score, 
+                Trial4Score, Trial5Score, Trial6Score, Trial7Score, 
+                Round4ProceedTo, Round5ProceedTo, Round6ProceedTo, Round7ProceedTo 
+                FROM ScoringSummaryQuery
+                """)
+    
+            for row in cur.fetchall():
+                team = Team(
+                    number=row[0],
+                    name=row[1],
+                    affiliation=row[2],
+                    round1=row[3],
+                    round2=row[4],
+                    round3=row[5],
+                    round4=row[6],
+                    round5=row[7],
+                    round6=row[8],
+                    round7=row[9],
+                    advanceTo4=row[10],
+                    advanceTo5=row[11],
+                    advanceTo6=row[12],
+                    advanceTo7=row[13])
+                teams.append(team)
+            cur.close()
+            conn.close()           
         return teams
 
 # map resource to URL
