@@ -6,16 +6,48 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-        <script src="{{ url_for('static', filename='js/libs/jquery-1.11.0.js') }}"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.dataTables.css') }}">
+        <script src="{{ url_for('static', filename='js/libs/jquery-1.11.1.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/libs/bootstrap.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/libs/moment.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/libs/jquery.dataTables.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/libs/dataTables.bootstrap.js') }}"></script>
         <script src="{{ url_for('static', filename='js/app.js') }}"></script>
         <script type="text/javascript">
-        $(document).ready(function () { 
-            fllipit.getData();
-            var auto_refresh = setInterval(function() {
-                fllipit.getData();
-            }, 10000);
+            $(document).ready(function () { 
+                var myTable = $('#teamsTable').DataTable({
+                    "searching": false,
+                    "ordering":  false,
+                    "lengthChange": false,
+                    "ajax": {
+                        "url": "/api/teams",
+                        "dataSrc": ""
+                    },
+                    "columns": [
+                        { "data": "number" },
+                        { "data": "name" },
+                        { "data": "affiliation" },
+                        { "data": "round1" },
+                        { "data": "round2" },
+                        { "data": "round3" }
+                    ]                    
+                });
+                
+                var page = 1;
+                var pageCount = myTable.page.info().pages;
+                
+                var page_advance = setInterval(function() {
+                    console.log("switching pages");
+                    if(page - 1 > pageCount) {
+                        console.log("reloading data");
+                        myTable.ajax.reload();
+                        myTable.page(0).draw(false);    
+                        pageCount = myTable.page.info().pages;
+                        page = 0;    
+                    }
+                    myTable.page(page).draw(false);
+                    page++;
+                }, 5000);
         });
       </script>
     </head>
@@ -24,7 +56,17 @@
             <h2 class="text-center">{{title}}</h2>    
             <div class="page-header">
                 <div id="teams">
-                    Loading data...
+                    <table class="table table-striped" id="teamsTable">
+                        <thead>
+                            <th>Number</th>
+                            <th>Name</th>
+                            <th>Affiliation</th>
+                            <th>Round 1</th>
+                            <th>Round 2</th>
+                            <th>Round 3</th>
+                            <th>Best</th>
+                        </thead>
+                    </table>
                 </div>
             </div>
             <h5 class="text-center" id="lastUpdate">Loading...</h5>
