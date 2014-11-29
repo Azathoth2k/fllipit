@@ -66,6 +66,9 @@ class Team(DB.Model):
         self.advanceTo6 = self.fixInput(advanceTo6)
         self.advanceTo7 = self.fixInput(advanceTo7)
         
+    def getBestScore(self):
+        return max(self.round1, self.round2, self.round3)
+        
     def fixInput(self, data):
         """Convert unicode data to ASCII."""
         if isinstance(data, unicode):
@@ -93,6 +96,7 @@ teamFields = {
     "advanceTo5": fields.Boolean,
     "advanceTo6": fields.Boolean,
     "advanceTo7": fields.Boolean,
+    "bestScore": fields.Integer
 }
 
 
@@ -105,6 +109,8 @@ class TeamList(Resource):
         teams = []
         if APP.config['TEST_DB']:
             teams = Team.query.all()
+            for team in teams:
+                team.bestScore = team.getBestScore()
         else:
             conn = pypyodbc.connect(
                 r"Driver={Microsoft Access Driver (*.mdb, *.accdb)};" + 

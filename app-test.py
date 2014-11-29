@@ -1,6 +1,6 @@
 """Backend unit testing for the FLL Pit Display."""
 
-from fllipit import APP
+from fllipit import APP, Team
 from coverage import coverage
 
 import unittest
@@ -22,6 +22,35 @@ class BasicTestCase(unittest.TestCase):
         tester = APP.test_client(self)
         response = tester.get('/api/teams', content_type='html/text')
         self.assertEqual(response.status_code, 200)
+        
+    def test_bestScore(self):
+        
+        # Three scores entered
+        team1 = Team(round1=350, round2=440, round3=500)
+        team2 = Team(round1=350, round2=440, round3=120)
+        team3 = Team(round1=350, round2=298, round3=305)
+        
+        self.assertEqual(500, team1.getBestScore())
+        self.assertEqual(440, team2.getBestScore())
+        self.assertEqual(350, team3.getBestScore())
+        
+    def test_bestScore_incomplete(self):
+        """Verify that the code can determine the best score for a team when not all 3 scores are entered"""
+        
+        # No scores entered yet
+        team0 = Team()
+        
+        # One score entered
+        team1 = Team(round1=350)
+        
+        # Two scores entered
+        team2 = Team(round1=350, round2=440)
+        team3 = Team(round1=350, round2=120)
+        
+        self.assertEqual(0, team0.getBestScore())
+        self.assertEqual(350, team1.getBestScore())
+        self.assertEqual(440, team2.getBestScore())
+        self.assertEqual(350, team3.getBestScore())
 
 if __name__ == '__main__':
     unittest.main()
