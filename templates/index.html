@@ -22,7 +22,10 @@
                     "lengthChange": false,
                     "ajax": {
                         "url": "/api/teams",
-                        "dataSrc": ""
+                        "dataSrc": "",
+                        "error": function() {
+                            alert("Unable to get data from server");   
+                        }
                     },
                     "columns": [
                         { "data": "number" },
@@ -40,7 +43,6 @@
                 
                 // Auto-advance through the datatable pages
                 var page_advance = setInterval(function() {
-                    console.log("about to switch to page " + page);
                     
                     // If on the final page, reload the data then start again
                     if(page >= pageCount) {
@@ -55,7 +57,7 @@
                     myTable.page(page).draw(false);
                     page++;
                 }, 5000);
-        });
+            });
       </script>
     </head>
     <body>
@@ -76,7 +78,6 @@
                     </table>
                 </div>
             </div>
-            <h5 class="text-center" id="lastUpdate">Loading...</h5>
         </div>
     </body>
 </html>
