@@ -2,6 +2,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 
 DB = SQLAlchemy()
 
+
 class Team(DB.Model):
     """Store data for a single Team"""
     number = DB.Column(DB.Integer, primary_key=True)
@@ -19,7 +20,7 @@ class Team(DB.Model):
     advanceTo6 = DB.Column(DB.Boolean)
     advanceTo7 = DB.Column(DB.Boolean)
 
-    # Constructor for the object, expects a name and url
+    # Constructor for the object
     def __init__(
         self,
         number=1234,
@@ -54,16 +55,17 @@ class Team(DB.Model):
         self.advanceTo7 = self.fixInput(advanceTo7)
         
     def getBestScore(self):
+        """Gets the best qualifying score for the team"""
         return max(self.round1, self.round2, self.round3)
-        
+    
     def fixInput(self, data):
         """Convert unicode data to ASCII."""
         if isinstance(data, unicode):
             return data.encode('ascii', 'ignore')
         else:
             return data
-
-    # Convert project to string
+        
     def toString(self):
         """Generate a string representing the project."""
         return "%s: name=%s" % (self.number, self.name)
+    

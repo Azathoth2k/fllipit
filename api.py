@@ -28,32 +28,38 @@ teamFields = {
 
 class TeamList(Resource):
 
-    """Setup a REST resource for the Jenkins project/ build data."""
+    """Setup a REST resource for the Team data."""
 
     @marshal_with(teamFields)
     def get(self):
         teams = []
         if APP.config['TEST_DB']:
+            # In test mode, use the sqlite database
             teams = Team.query.all()
             for team in teams:
                 team.bestScore = team.getBestScore()
         else:
+            # In production mode, get the data from the Access database
+            # Create the database connection
             conn = pypyodbc.connect(
-                r"Driver={Microsoft Access Driver (*.mdb, *.accdb)};" + 
+                r"Driver={Microsoft Access Driver (*.mdb, *.accdb)};" +
                 r"Dbq="+APP.config['DB_FILE']+";")
-           
             cur = conn.cursor()
-            cur = conn.cursor()
+            
+            # Get the data from the database
             cur.execute(
                 """
-                SELECT TeamNumber, TeamName, Affiliation, 
-                Trial1Score, Trial2Score, Trial3Score, 
-                Trial4Score, Trial5Score, Trial6Score, Trial7Score, 
-                Round4ProceedTo, Round5ProceedTo, Round6ProceedTo, Round7ProceedTo 
+                SELECT TeamNumber, TeamName, Affiliation,
+                Trial1Score, Trial2Score, Trial3Score,
+                Trial4Score, Trial5Score, Trial6Score, Trial7Score,
+                Round4ProceedTo, Round5ProceedTo,
+                Round6ProceedTo, Round7ProceedTo
                 FROM ScoringSummaryQuery
                 """)
     
+            # Build the list of Team objects
             for row in cur.fetchall():
+                # Build the team object
                 team = Team(
                     number=row[0],
                     name=row[1],
@@ -69,9 +75,16 @@ class TeamList(Resource):
                     advanceTo5=row[11],
                     advanceTo6=row[12],
                     advanceTo7=row[13])
+                
+                # Find and store the best qualifying score for the team
+                team.bestScore = team.getBestScore()
+                
+                # Add the current team to the list of all teams
                 teams.append(team)
+                
+            # Close the database connection
             cur.close()
-            conn.close()           
+            conn.close()
         return teams
 
 # map resource to URL
