@@ -15,6 +15,7 @@
         <script src="{{ url_for('static', filename='js/app.js') }}"></script>
         <script type="text/javascript">
             $(document).ready(function () { 
+                // Initialize the DataTable component
                 var myTable = $('#teamsTable').DataTable({
                     "searching": false,
                     "ordering":  false,
@@ -33,18 +34,24 @@
                     ]                    
                 });
                 
+                // Set up the page looping
                 var page = 1;
                 var pageCount = myTable.page.info().pages;
                 
+                // Auto-advance through the datatable pages
                 var page_advance = setInterval(function() {
-                    console.log("switching pages");
-                    if(page - 1 > pageCount) {
+                    console.log("about to switch to page " + page);
+                    
+                    // If on the final page, reload the data then start again
+                    if(page >= pageCount) {
                         console.log("reloading data");
                         myTable.ajax.reload();
                         myTable.page(0).draw(false);    
                         pageCount = myTable.page.info().pages;
                         page = 0;    
                     }
+                    
+                    // Set the table page and redraw
                     myTable.page(page).draw(false);
                     page++;
                 }, 5000);
