@@ -1,0 +1,160 @@
+{% extends "base.html" %}        
+{% block header %}
+    <script type="text/javascript">
+        $(document).ready(function () { 
+            // Initialize the DataTable component
+            var top12Table = $('#top12').DataTable({
+                "pageLength": 12,
+                "searching": false,
+                "ordering":  false,
+                "lengthChange": false,
+                "info": false
+            });
+            var top4Table = $('#top4').DataTable({
+                "searching": false,
+                "ordering":  false,
+                "lengthChange": false,
+                "info": false
+            });
+            var top2Table = $('#top2').DataTable({
+                "searching": false,
+                "ordering":  false,
+                "lengthChange": false,
+                "info": false
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <h3 class='roundHeader'>Top 12</h3>
+                <table class="table table-striped" id="top12">
+                    <thead>
+                        <th>ID#</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Team 1</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Team 2</td>
+                            <td>110</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Team 3</td>
+                            <td>120</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Team 4</td>
+                            <td>130</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Team 5</td>
+                            <td>140</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Team 6</td>
+                            <td>150</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Team 7</td>
+                            <td>160</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Team 8</td>
+                            <td>170</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>Team 9</td>
+                            <td>180</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Team 10</td>
+                            <td>190</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>Team 11</td>
+                            <td>200</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Team 12</td>
+                            <td>210</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <h3 class='roundHeader'>Top 4</h3>
+                <table class="table table-striped" id="top4">
+                    <thead>
+                        <th>ID#</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Team 1</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Team 2</td>
+                            <td>110</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Team 3</td>
+                            <td>120</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Team 4</td>
+                            <td>130</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <h3 class='roundHeader'>Top 2</h3>
+                <table class="table table-striped" id="top2">
+                    <thead>
+                        <th>ID#</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Team 1</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Team 2</td>
+                            <td>110</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
