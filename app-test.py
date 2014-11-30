@@ -30,9 +30,17 @@ class BasicTestCase(unittest.TestCase):
         team2 = Team(round1=350, round2=440, round3=120)
         team3 = Team(round1=350, round2=298, round3=305)
         
-        self.assertEqual(500, team1.getBestScore())
-        self.assertEqual(440, team2.getBestScore())
-        self.assertEqual(350, team3.getBestScore())
+        self.assertEqual(500, team1.bestScore)
+        self.assertEqual(440, team1.secondBestScore)
+        self.assertEqual(350, team1.worstScore)
+        
+        self.assertEqual(440, team2.bestScore)
+        self.assertEqual(350, team2.secondBestScore)
+        self.assertEqual(120, team2.worstScore)
+        
+        self.assertEqual(350, team3.bestScore)
+        self.assertEqual(305, team3.secondBestScore)
+        self.assertEqual(298, team3.worstScore)
         
     def test_bestScore_incomplete(self):
         """Verify that the code can determine the best score for a team when not all 3 scores are entered"""
@@ -47,10 +55,21 @@ class BasicTestCase(unittest.TestCase):
         team2 = Team(round1=350, round2=440)
         team3 = Team(round1=350, round2=120)
         
-        self.assertEqual(0, team0.getBestScore())
-        self.assertEqual(350, team1.getBestScore())
-        self.assertEqual(440, team2.getBestScore())
-        self.assertEqual(350, team3.getBestScore())
+        self.assertEqual(0, team0.bestScore)
+        self.assertEqual(0, team0.secondBestScore)
+        self.assertEqual(0, team0.worstScore)
+        
+        self.assertEqual(350, team1.bestScore)
+        self.assertEqual(0, team1.secondBestScore)
+        self.assertEqual(0, team1.worstScore)
+        
+        self.assertEqual(440, team2.bestScore)
+        self.assertEqual(350, team2.secondBestScore)
+        self.assertEqual(0, team2.worstScore)
+        
+        self.assertEqual(350, team3.bestScore)
+        self.assertEqual(120, team3.secondBestScore)
+        self.assertEqual(0, team3.worstScore)
 
 if __name__ == '__main__':
     unittest.main()

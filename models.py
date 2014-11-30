@@ -53,11 +53,15 @@ class Team(DB.Model):
         self.advanceTo5 = self.fixInput(advanceTo5)
         self.advanceTo6 = self.fixInput(advanceTo6)
         self.advanceTo7 = self.fixInput(advanceTo7)
-        
-    def getBestScore(self):
-        """Gets the best qualifying score for the team"""
-        return max(self.round1, self.round2, self.round3)
+        self.sortScores()
     
+    def sortScores(self):
+        scores = [self.round1, self.round2, self.round3]
+        self.bestScore = max(scores)
+        scores.remove(self.bestScore)
+        self.secondBestScore = max(scores)
+        self.worstScore = min(scores)
+        
     def fixInput(self, data):
         """Convert unicode data to ASCII."""
         if isinstance(data, unicode):

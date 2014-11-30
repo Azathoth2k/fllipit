@@ -22,7 +22,8 @@ teamFields = {
     "advanceTo5": fields.Boolean,
     "advanceTo6": fields.Boolean,
     "advanceTo7": fields.Boolean,
-    "bestScore": fields.Integer
+    "bestScore": fields.Integer,
+    "rank": fields.Integer
 }
 
 
@@ -37,7 +38,7 @@ class TeamList(Resource):
             # In test mode, use the sqlite database
             teams = Team.query.all()
             for team in teams:
-                team.bestScore = team.getBestScore()
+                team.sortScores()
         else:
             # In production mode, get the data from the Access database
             # Create the database connection
@@ -76,16 +77,23 @@ class TeamList(Resource):
                     advanceTo6=row[12],
                     advanceTo7=row[13])
                 
-                # Find and store the best qualifying score for the team
-                team.bestScore = team.getBestScore()
-                
                 # Add the current team to the list of all teams
                 teams.append(team)
                 
             # Close the database connection
             cur.close()
             conn.close()
-        return teams
-
+            
+        sortedTeams = sorted(
+            teams,
+            key=lambda x: (x.bestScore, x.secondBestScore, x.worstScore),
+            reverse=True)
+        
+        i = 1
+        for team in sortedTeams:
+            team.rank = i
+            i += 1
+        
+        return sortedTeams
 # map resource to URL
 API.add_resource(TeamList, '/api/teams')
