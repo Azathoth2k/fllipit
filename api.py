@@ -96,13 +96,14 @@ class Rankings(Resource):
     @marshal_with(teamFields)
     def get(self):
         teams = getTeams()
+        rankedTeams = rankTeams(teams)
              
         i = 1
-        for team in rankTeams(teams):
+        for team in rankedTeams:
             team.rank = i
             i += 1
         
-        return sortedTeams
+        return rankedTeams
 
 
 class Playoffs(Resource):
