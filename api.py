@@ -115,6 +115,10 @@ class Playoffs(Resource):
         # Get only the teams that are marked to advance to the selected round
         teams = [t for t in getTeams() if t.isAdvancingToRound(roundNumber)]
         
+        # Add a temporary attribute 'score' to the team objects, for generic REST output
+        for team in teams:
+            team.score = team.getRoundScore(roundNumber)
+        
         if roundNumber <= 4:
             # If this is the first playoff round, return team list sorted by qualifying rank
             return rankTeams(teams)
@@ -124,6 +128,7 @@ class Playoffs(Resource):
                 teams,
                 key=lambda x: x.getRoundScore(roundNumber-1),
                 reverse=True)
+        
 
 # map resource to URL
 API.add_resource(Rankings, '/api/teams')

@@ -8,20 +8,67 @@
                 "searching": false,
                 "ordering":  false,
                 "lengthChange": false,
-                "info": false
+                "info": false,                
+                "ajax": {
+                    "url": "/api/playoffs/4",
+                    "dataSrc": "",
+                    "error": function() {
+                        alert("Unable to get data from server");   
+                    }
+                },
+                "columns": [
+                    { "data": "number", "class": "aligncenter"},
+                    { "data": "name", "class": "aligncenter" },
+                    { "data": "score", "class": "aligncenter" }
+                ]
             });
             var top4Table = $('#top4').DataTable({
                 "searching": false,
                 "ordering":  false,
                 "lengthChange": false,
-                "info": false
+                "info": false,                
+                "ajax": {
+                    "url": "/api/playoffs/5",
+                    "dataSrc": "",
+                    "error": function() {
+                        alert("Unable to get data from server");   
+                    }
+                },
+                "columns": [
+                    { "data": "number", "class": "aligncenter"},
+                    { "data": "name", "class": "aligncenter" },
+                    { "data": "score", "class": "aligncenter" }
+                ]
             });
             var top2Table = $('#top2').DataTable({
                 "searching": false,
                 "ordering":  false,
                 "lengthChange": false,
-                "info": false
+                "info": false,                
+                "ajax": {
+                    "url": "/api/playoffs/6",
+                    "dataSrc": "",
+                    "error": function() {
+                        alert("Unable to get data from server");   
+                    }
+                },
+                "columns": [
+                    { "data": "number", "class": "aligncenter"},
+                    { "data": "name", "class": "aligncenter" },
+                    { "data": "score", "class": "aligncenter" }
+                ]
             });
+            
+            // Auto-reload
+            var dataReload = setInterval(function() {
+                console.log("reloading data");
+                top12Table.ajax.reload();
+                top12Table.page(0).draw(false);
+                top4Table.ajax.reload();
+                top4Table.page(0).draw(false);
+                top2Table.ajax.reload();
+                top2Table.page(0).draw(false);
+            }, 10000);
         });
     </script>
 {% endblock %}
@@ -37,68 +84,6 @@
                         <th>Name</th>
                         <th>Score</th>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Team 1</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Team 2</td>
-                            <td>110</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Team 3</td>
-                            <td>120</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Team 4</td>
-                            <td>130</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Team 5</td>
-                            <td>140</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Team 6</td>
-                            <td>150</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Team 7</td>
-                            <td>160</td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>Team 8</td>
-                            <td>170</td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>Team 9</td>
-                            <td>180</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>Team 10</td>
-                            <td>190</td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td>Team 11</td>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td>Team 12</td>
-                            <td>210</td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
             <div class="col-md-4">
@@ -109,28 +94,6 @@
                         <th>Name</th>
                         <th>Score</th>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Team 1</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Team 2</td>
-                            <td>110</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Team 3</td>
-                            <td>120</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Team 4</td>
-                            <td>130</td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
             <div class="col-md-4">
@@ -141,18 +104,6 @@
                         <th>Name</th>
                         <th>Score</th>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Team 1</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Team 2</td>
-                            <td>110</td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
