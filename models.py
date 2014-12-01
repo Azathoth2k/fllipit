@@ -62,6 +62,14 @@ class Team(DB.Model):
         self.secondBestScore = max(scores)
         self.worstScore = min(scores)
         
+    def getRoundScore(self, roundNumber):
+        scores = [self.round1, self.round2, self.round3, self.round4, self.round5, self.round6, self.round7]
+        return scores[roundNumber-1]
+    
+    def isAdvancingToRound(self, roundNumber):
+        advances = [self.advanceTo4, self.advanceTo5, self.advanceTo6, self.advanceTo7]
+        return advances[roundNumber-4]
+        
     def fixInput(self, data):
         """Convert unicode data to ASCII."""
         if isinstance(data, unicode):
