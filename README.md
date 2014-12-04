@@ -24,7 +24,7 @@ Use Pip to install dependencies
 ```
 
 Set the 'Event Name' and 'DB File' properties in config.py
-```text
+```python
 EVENT_NAME = 'Maine FLL Championship'
 DB_FILE = 'path\to\access\database.accdb'
 ```
@@ -35,10 +35,12 @@ Run the application
 ```
 
 #### Using the temporary database (development)
+This is useful for developing the application on systems that don't have MS Access installed.
+
 Follow the directions above, through the dependency installation.
 
 Set the 'Test DB' property in config.py to True
-```text
+```python
 TEST_DB = True
 ```
 
@@ -50,4 +52,4 @@ Create the database (only if using test database instead of an actual MS Access 
 Run the application
 ```text
 $ python fllipit.py
-```
+``'
