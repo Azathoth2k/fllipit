@@ -7,6 +7,11 @@ Install Python 2.7: https://www.python.org/downloads/
 
 Install pip: https://pip.pypa.io/en/latest/installing.html
 
+Install virtualenv
+```text
+> pip install virtualenv
+```
+
 Clone the repository
 ```text
 > git clone https://github.com/rtfoley/fllipit.git
