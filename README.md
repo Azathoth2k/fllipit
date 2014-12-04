@@ -32,7 +32,7 @@ Use Pip to install dependencies
 Set the 'Event Name' and 'DB File' properties in config.py
 ```python
 EVENT_NAME = 'Maine FLL Championship'
-DB_FILE = 'path\to\access\database.accdb'
+DB_FILE = 'C:\\path\\to\\access\\database.accdb'
 ```
 
 Run the application
