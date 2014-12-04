@@ -12,7 +12,8 @@ from api import *
 from views import *
 
 # Link the database to the Flask application
-DB.init_app(APP)
+if APP.config['TEST_DB']:
+    DB.init_app(APP)
 
 if __name__ == '__main__':
     APP.run(host='0.0.0.0', debug=APP.config['DEBUG'])
