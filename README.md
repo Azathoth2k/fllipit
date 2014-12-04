@@ -4,6 +4,7 @@ Gathers data from a Microsoft Access database, then publishes rankings and palyo
 
 ### Using the Application:
 Install Python 2.7: https://www.python.org/downloads/
+
 Install pip: https://pip.pypa.io/en/latest/installing.html
 
 Clone the repository
