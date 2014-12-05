@@ -40,6 +40,10 @@ Run the application
 (venv) > python fllipit.py
 ```
 
+The rankings page will be available at http://localhost:5000
+
+The playoff ladder will be available at http://localhost:5000/ladder
+
 #### Using the temporary database (development)
 This is useful for developing the application on systems that don't have MS Access installed.
 
