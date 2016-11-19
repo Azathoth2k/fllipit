@@ -25,14 +25,14 @@ def getTeams():
 
         # Get the data from the database
         cur.execute(
-            """
+            '''
             SELECT TeamNumber, TeamName, Affiliation,
             Trial1Score, Trial2Score, Trial3Score,
             Trial4Score, Trial5Score, Trial6Score, Trial7Score,
-            Round4ProceedTo, Round5ProceedTo,
-            Round6ProceedTo, Round7ProceedTo
+            ToRound4, ToRound5,
+            ToRound6, ToRound7
             FROM ScoringSummaryQuery
-            """)
+            ''')
 
         # Build the list of Team objects
         for row in cur.fetchall():
