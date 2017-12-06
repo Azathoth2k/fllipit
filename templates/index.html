@@ -11,7 +11,7 @@
                     "url": "/api/teams",
                     "dataSrc": "",
                     "error": function() {
-                        alert("Unable to get data from server");   
+                        console.log("Unable to get data from server");   
                     }
                 },
                 "columns": [
@@ -36,7 +36,6 @@
 
                 // If on the final page, reload the data then start again
                 if(page >= pageCount) {
-                    console.log("reloading data");
                     myTable.ajax.reload();
                     myTable.page(0).draw(false);    
                     pageCount = myTable.page.info().pages;
