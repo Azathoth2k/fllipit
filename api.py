@@ -16,63 +16,60 @@ def getTeams():
         for team in teams:
             team.sortScores()
     else:
-        try:
-            # In production mode, get the data from the Access database
-            # Create the database connection
-            conn = pypyodbc.connect(
-                r"Driver={Microsoft Access Driver (*.mdb, *.accdb)};" +
-                r"Dbq="+APP.config['DB_FILE']+";")
-            cur = conn.cursor()
+        # In production mode, get the data from the Access database
+        # Create the database connection
+        conn = pypyodbc.connect(
+            r"Driver={Microsoft Access Driver (*.mdb, *.accdb)};" +
+            r"Dbq=" + APP.config['DB_FILE'] + ";")
+        cur = conn.cursor()
 
-            # Get the data from the database
-            cur.execute(
-                '''
-                SELECT TeamNumber, TeamName, Affiliation,
-                Trial1Score, Trial2Score, Trial3Score,
-                Trial4Score, Trial5Score, Trial6Score, Trial7Score,
-                ToRound4, ToRound5,
-                ToRound6, ToRound7,
-                Trial1PenaltyCount, Trial2PenaltyCount, 
-                Trial3PenaltyCount, Trial4PenaltyCount,
-                Trial5PenaltyCount, Trial6PenaltyCount,
-                Trial7PenaltyCount
-                FROM ScoringSummaryQuery
-                ''')
+        # Get the data from the database
+        cur.execute(
+            '''
+            SELECT TeamNumber, TeamName, Affiliation,
+            Trial1Score, Trial2Score, Trial3Score,
+            Trial4Score, Trial5Score, Trial6Score, Trial7Score,
+            ToRound4, ToRound5,
+            ToRound6, ToRound7,
+            Trial1PenaltyCount, Trial2PenaltyCount, 
+            Trial3PenaltyCount, Trial4PenaltyCount,
+            Trial5PenaltyCount, Trial6PenaltyCount,
+            Trial7PenaltyCount
+            FROM ScoringSummaryQuery
+            ''')
 
-            # Build the list of Team objects
-            for row in cur.fetchall():
-                # Build the team object
-                team = Team(
-                    number=row[0],
-                    name=row[1],
-                    affiliation=row[2],
-                    round1=row[3],
-                    round2=row[4],
-                    round3=row[5],
-                    round4=row[6],
-                    round5=row[7],
-                    round6=row[8],
-                    round7=row[9],
-                    advanceTo4=row[10],
-                    advanceTo5=row[11],
-                    advanceTo6=row[12],
-                    advanceTo7=row[13],
-                    round1Penalties=row[14],
-                    round2Penalties=row[15],
-                    round3Penalties=row[16],
-                    round4Penalties=row[17],
-                    round5Penalties=row[18],
-                    round6Penalties=row[19],
-                    round7Penalties=row[20],)
+        # Build the list of Team objects
+        for row in cur.fetchall():
+            # Build the team object
+            team = Team(
+                number=row[0],
+                name=row[1],
+                affiliation=row[2],
+                round1=row[3],
+                round2=row[4],
+                round3=row[5],
+                round4=row[6],
+                round5=row[7],
+                round6=row[8],
+                round7=row[9],
+                advanceTo4=row[10],
+                advanceTo5=row[11],
+                advanceTo6=row[12],
+                advanceTo7=row[13],
+                round1Penalties=row[14],
+                round2Penalties=row[15],
+                round3Penalties=row[16],
+                round4Penalties=row[17],
+                round5Penalties=row[18],
+                round6Penalties=row[19],
+                round7Penalties=row[20], )
 
-                # Add the current team to the list of all teams
-                teams.append(team)
+            # Add the current team to the list of all teams
+            teams.append(team)
 
-            # Close the database connection
-            cur.close()
-            conn.close()
-        except Exception as excp:
-            print(str(excp))
+        # Close the database connection
+        cur.close()
+        conn.close()
     
     return teams
 
