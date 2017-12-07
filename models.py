@@ -79,8 +79,8 @@ class Team(DB.Model):
     class Score:
         def __init__(self, round=1, score=0, penalties=0):
             self.round = round
-            self.score = 0 if score is None else score
-            self.penalties = 0 if penalties is None else penalties
+            self.score = Team.default_to_zero(score)
+            self.penalties = Team.default_to_zero(penalties)
 
     def sortScores(self):
         scores = [self.Score(1, self.round1, self.round1Penalties),
@@ -103,6 +103,18 @@ class Team(DB.Model):
     def getRoundScore(self, roundNumber):
         scores = [self.round1, self.round2, self.round3, self.round4, self.round5, self.round6, self.round7]
         return scores[roundNumber-1]
+
+    def getRoundPenalties(self, roundNumber):
+        penalties = [
+            self.round1Penalties,
+            self.round2Penalties,
+            self.round3Penalties,
+            self.round4Penalties,
+            self.round5Penalties,
+            self.round6Penalties,
+            self.round7Penalties]
+
+        return self.default_to_zero(penalties[roundNumber-1])
     
     def isAdvancingToRound(self, roundNumber):
         advances = [self.advanceTo4, self.advanceTo5, self.advanceTo6, self.advanceTo7]
@@ -114,6 +126,13 @@ class Team(DB.Model):
             return data.encode('ascii', 'ignore')
         else:
             return data
+
+    @staticmethod
+    def default_to_zero(number):
+        if number is None:
+            return 0
+        else:
+            return number
         
     def toString(self):
         """Generate a string representing the project."""

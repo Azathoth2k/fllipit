@@ -140,7 +140,7 @@ class Playoffs(Resource):
             # Return team list sorted by scores from previous round
             return sorted(
                 teams,
-                key=lambda x: x.getRoundScore(roundNumber-1),
+                key=lambda x: (x.getRoundScore(roundNumber-1), -x.getRoundPenalties(roundNumber-1)),
                 reverse=True)
         
 
