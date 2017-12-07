@@ -20,7 +20,7 @@ def getTeams():
         # Create the database connection
         conn = pypyodbc.connect(
             r"Driver={Microsoft Access Driver (*.mdb, *.accdb)};" +
-            r"Dbq="+APP.config['DB_FILE']+";")
+            r"Dbq=" + APP.config['DB_FILE'] + ";")
         cur = conn.cursor()
 
         # Get the data from the database
@@ -30,7 +30,11 @@ def getTeams():
             Trial1Score, Trial2Score, Trial3Score,
             Trial4Score, Trial5Score, Trial6Score, Trial7Score,
             ToRound4, ToRound5,
-            ToRound6, ToRound7
+            ToRound6, ToRound7,
+            Trial1PenaltyCount, Trial2PenaltyCount, 
+            Trial3PenaltyCount, Trial4PenaltyCount,
+            Trial5PenaltyCount, Trial6PenaltyCount,
+            Trial7PenaltyCount
             FROM ScoringSummaryQuery
             ''')
 
@@ -51,7 +55,14 @@ def getTeams():
                 advanceTo4=row[10],
                 advanceTo5=row[11],
                 advanceTo6=row[12],
-                advanceTo7=row[13])
+                advanceTo7=row[13],
+                round1Penalties=row[14],
+                round2Penalties=row[15],
+                round3Penalties=row[16],
+                round4Penalties=row[17],
+                round5Penalties=row[18],
+                round6Penalties=row[19],
+                round7Penalties=row[20], )
 
             # Add the current team to the list of all teams
             teams.append(team)
@@ -65,7 +76,7 @@ def getTeams():
 def rankTeams(teams):
     return sorted(
         teams,
-        key=lambda x: (x.bestScore, x.secondBestScore, x.worstScore),
+        key=lambda x: (x.bestScore, x.secondBestScore, x.worstScore, -x.bestScorePenalties, -x.secondBestScorePenalties, -x.worstScorePenalties),
         reverse=True)
 
 
@@ -118,16 +129,12 @@ class Playoffs(Resource):
         # Add a temporary attribute 'score' to the team objects, for generic REST output
         for team in teams:
             team.score = team.getRoundScore(roundNumber)
-        
-        if roundNumber <= 4:
-            # If this is the first playoff round, return team list sorted by qualifying rank
-            return rankTeams(teams)
-        else:
-            # Return team list sorted by scores from previous round
-            return sorted(
-                teams,
-                key=lambda x: x.getRoundScore(roundNumber-1),
-                reverse=True)
+
+        # Return team list sorted by scores from previous round
+        return sorted(
+            teams,
+            key=lambda x: (x.getRoundScore(roundNumber), -x.getRoundPenalties(roundNumber)),
+            reverse=True)
         
 
 # map resource to URL

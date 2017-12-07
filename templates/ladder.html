@@ -4,7 +4,6 @@
         $(document).ready(function () { 
             // Initialize the DataTable component
             var top12Table = $('#top12').DataTable({
-                "pageLength": 12,
                 "searching": false,
                 "ordering":  false,
                 "lengthChange": false,
@@ -13,7 +12,7 @@
                     "url": "/api/playoffs/4",
                     "dataSrc": "",
                     "error": function() {
-                        alert("Unable to get data from server");   
+                        console.log("Unable to get data from server");
                     }
                 },
                 "columns": [
@@ -31,7 +30,7 @@
                     "url": "/api/playoffs/5",
                     "dataSrc": "",
                     "error": function() {
-                        alert("Unable to get data from server");   
+                        console.log("Unable to get data from server");
                     }
                 },
                 "columns": [
@@ -49,7 +48,7 @@
                     "url": "/api/playoffs/6",
                     "dataSrc": "",
                     "error": function() {
-                        alert("Unable to get data from server");   
+                        console.log("Unable to get data from server");
                     }
                 },
                 "columns": [
@@ -77,7 +76,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4">
-                <h3 class='roundHeader'>Top 12</h3>
+                <h3 class='roundHeader'>Quarterfinals</h3>
                 <table class="table table-striped" id="top12">
                     <thead>
                         <th>ID#</th>
@@ -87,7 +86,7 @@
                 </table>
             </div>
             <div class="col-md-4">
-                <h3 class='roundHeader'>Top 4</h3>
+                <h3 class='roundHeader'>Semifinals</h3>
                 <table class="table table-striped" id="top4">
                     <thead>
                         <th>ID#</th>
@@ -97,7 +96,7 @@
                 </table>
             </div>
             <div class="col-md-4">
-                <h3 class='roundHeader'>Top 2</h3>
+                <h3 class='roundHeader'>Finals</h3>
                 <table class="table table-striped" id="top2">
                     <thead>
                         <th>ID#</th>
