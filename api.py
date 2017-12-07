@@ -132,16 +132,12 @@ class Playoffs(Resource):
         # Add a temporary attribute 'score' to the team objects, for generic REST output
         for team in teams:
             team.score = team.getRoundScore(roundNumber)
-        
-        if roundNumber <= 4:
-            # If this is the first playoff round, return team list sorted by qualifying rank
-            return rankTeams(teams)
-        else:
-            # Return team list sorted by scores from previous round
-            return sorted(
-                teams,
-                key=lambda x: (x.getRoundScore(roundNumber-1), -x.getRoundPenalties(roundNumber-1)),
-                reverse=True)
+
+        # Return team list sorted by scores from previous round
+        return sorted(
+            teams,
+            key=lambda x: (x.getRoundScore(roundNumber), -x.getRoundPenalties(roundNumber)),
+            reverse=True)
         
 
 # map resource to URL
