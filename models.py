@@ -136,7 +136,7 @@ class Team(DB.Model):
     
     def isAdvancingToRound(self, roundNumber):
         advances = [self.advanceTo4, self.advanceTo5, self.advanceTo6, self.advanceTo7]
-        return advances[roundNumber-4] == 'Yes'
+        return advances[roundNumber-6] == True
         
     def fixInput(self, data):
         """Convert unicode data to ASCII."""
