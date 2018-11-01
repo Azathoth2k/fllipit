@@ -26,18 +26,18 @@ class BasicTestCase(unittest.TestCase):
     def test_bestScore(self):
         
         # Three scores entered
-        team1 = Team(round1=350, round2=440, round3=500)
-        team2 = Team(round1=350, round2=440, round3=120)
-        team3 = Team(round1=350, round2=298, round3=305)
+        team1 = Team(round1=350, round2=440, round3=500, round4=410, round5=120)
+        team2 = Team(round1=350, round2=440, round3=120, round4=410, round5=120)
+        team3 = Team(round1=350, round2=298, round3=305, round4=325, round5=120)
         
         self.assertEqual(500, team1.bestScore)
         self.assertEqual(440, team1.secondBestScore)
         self.assertEqual(350, team1.worstScore)
-        
+
         self.assertEqual(440, team2.bestScore)
         self.assertEqual(350, team2.secondBestScore)
         self.assertEqual(120, team2.worstScore)
-        
+
         self.assertEqual(350, team3.bestScore)
         self.assertEqual(305, team3.secondBestScore)
         self.assertEqual(298, team3.worstScore)

@@ -26,15 +26,33 @@ def getTeams():
         # Get the data from the database
         cur.execute(
             '''
-            SELECT TeamNumber, TeamName, Affiliation,
-            Trial1Score, Trial2Score, Trial3Score,
-            Trial4Score, Trial5Score, Trial6Score, Trial7Score,
-            ToRound4, ToRound5,
-            ToRound6, ToRound7,
-            Trial1PenaltyCount, Trial2PenaltyCount, 
-            Trial3PenaltyCount, Trial4PenaltyCount,
-            Trial5PenaltyCount, Trial6PenaltyCount,
-            Trial7PenaltyCount
+            SELECT TeamNumber, 
+            TeamName, 
+            Affiliation,
+            Trial1Score, 
+            Trial2Score, 
+            Trial3Score,
+            Trial4Score, 
+            Trial5Score,
+            Trial6Score,
+            Trial7Score,
+            ToRound4, 
+            ToRound5,
+            ToRound6, 
+            ToRound7,
+            Trial1PenaltyCount, 
+            Trial2PenaltyCount, 
+            Trial3PenaltyCount, 
+            Trial4PenaltyCount,
+            Trial5PenaltyCount, 
+            playoffsround1score,
+            playoffsround2score, 
+            playoffsround3score, 
+            playoffsround4score,
+            playoffsround1penaltycount,
+            playoffsround2penaltycount, 
+            playoffsround3penaltycount, 
+            playoffsround4penaltycount
             FROM ScoringSummaryQuery
             ''')
 
@@ -61,8 +79,14 @@ def getTeams():
                 round3Penalties=row[16],
                 round4Penalties=row[17],
                 round5Penalties=row[18],
-                round6Penalties=row[19],
-                round7Penalties=row[20], )
+                elim1=row[19],
+                elim2=row[20],
+                elim3=row[21],
+                elim4=row[22],
+                elim1Penalties=row[23],
+                elim2Penalties=row[24],
+                elim3Penalties=row[25],
+                elim4Penalties=row[26] )
 
             # Add the current team to the list of all teams
             teams.append(team)
@@ -88,6 +112,8 @@ teamFields = {
     "round1": fields.Integer,
     "round2": fields.Integer,
     "round3": fields.Integer,
+    "round4": fields.Integer,
+    "round5": fields.Integer,
     "bestScore": fields.Integer,
     "rank": fields.Integer
 }
