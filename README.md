@@ -3,7 +3,7 @@ A simple pit display for use at Maine FIRST Lego League Events.
 Gathers data from a Microsoft Access database, then publishes rankings and palyoff progression to webpage using Python Flask package.
 
 ### Using the Application:
-Install Python 2.7: https://www.python.org/downloads/
+Install Python 3.x: https://www.python.org/downloads/
 
 Install pip: https://pip.pypa.io/en/latest/installing.html
 
