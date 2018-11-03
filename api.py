@@ -161,8 +161,22 @@ class Playoffs(Resource):
             teams,
             key=lambda x: (x.getRoundScore(roundNumber), -x.getRoundPenalties(roundNumber)),
             reverse=True)
+
+class TournamentSettings(Resource):
+
+    """Setup a REST resource for the tournament settings"""
+
+    def get(self):
+        rounds = 3
+        if(APP.config['USE_5_QUAL_ROUNDS']):
+            rounds = 5
+
+        return {'qualifying_rounds': rounds}
+
+
         
 
 # map resource to URL
 API.add_resource(Rankings, '/api/teams')
 API.add_resource(Playoffs, '/api/playoffs/<int:roundNumber>')
+API.add_resource(TournamentSettings, '/api/settings')

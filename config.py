@@ -7,3 +7,6 @@ DEBUG = False
 EVENT_NAME = 'Maine FLL Championship'
 TEST_DB = False
 DB_FILE = 'C:\\path\\to\\access\\database.accdb'
+
+# The number of qualifying rounds, minimum is 
+USE_5_QUAL_ROUNDS = False
