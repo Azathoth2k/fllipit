@@ -17,6 +17,12 @@ class BasicTestCase(unittest.TestCase):
         response = tester.get('/', content_type='html/text')
         self.assertEqual(response.status_code, 200)
 
+    def test_playoff_ladder(self):
+        """Verfy that the index page is present."""
+        tester = APP.test_client(self)
+        response = tester.get('/ladder', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+
     def test_api(self):
         """Verify that the API endpoint is present."""
         tester = APP.test_client(self)
