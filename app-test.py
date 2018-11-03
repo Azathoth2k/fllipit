@@ -29,18 +29,28 @@ class BasicTestCase(unittest.TestCase):
         team1 = Team(round1=350, round2=440, round3=500, round4=410, round5=120)
         team2 = Team(round1=350, round2=440, round3=120, round4=410, round5=120)
         team3 = Team(round1=350, round2=298, round3=305, round4=325, round5=120)
+        team4 = Team(round1=350, round2=298, round3=305, round4=400, round5=120)
+        team5 = Team(round1=250, round2=298, round3=305, round4=400, round5=410)
         
         self.assertEqual(500, team1.bestScore)
         self.assertEqual(440, team1.secondBestScore)
-        self.assertEqual(350, team1.worstScore)
+        self.assertEqual(410, team1.worstScore)
 
         self.assertEqual(440, team2.bestScore)
-        self.assertEqual(350, team2.secondBestScore)
-        self.assertEqual(120, team2.worstScore)
+        self.assertEqual(410, team2.secondBestScore)
+        self.assertEqual(350, team2.worstScore)
 
         self.assertEqual(350, team3.bestScore)
-        self.assertEqual(305, team3.secondBestScore)
-        self.assertEqual(298, team3.worstScore)
+        self.assertEqual(325, team3.secondBestScore)
+        self.assertEqual(305, team3.worstScore)
+
+        self.assertEqual(400, team4.bestScore)
+        self.assertEqual(350, team4.secondBestScore)
+        self.assertEqual(305, team4.worstScore)
+
+        self.assertEqual(410, team5.bestScore)
+        self.assertEqual(400, team5.secondBestScore)
+        self.assertEqual(305, team5.worstScore)
         
     def test_bestScore_incomplete(self):
         """Verify that the code can determine the best score for a team when not all 3 scores are entered"""
