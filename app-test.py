@@ -1,10 +1,12 @@
 """Backend unit testing for the FLL Pit Display."""
 
-from fllipit import APP, Team
-from coverage import coverage
-
 import unittest
 import os
+
+from coverage import coverage
+
+from fllipit import APP, Team
+from api import rankTeams
 
 
 class BasicTestCase(unittest.TestCase):
@@ -86,6 +88,21 @@ class BasicTestCase(unittest.TestCase):
         self.assertEqual(350, team3.bestScore)
         self.assertEqual(120, team3.secondBestScore)
         self.assertEqual(0, team3.worstScore)
+
+    def test_bestScore_penlaties(self):
+        """Verify that the code can determine the best score for a team when not all 3 scores are entered"""
+        
+        # No scores entered yet
+        
+        # One score entered
+        team1 = Team(number=1, round1=350, round1Penalties=0)
+        team2 = Team(number=2, round1=350, round1Penalties=1)
+        
+        teams = [team1, team2]
+        sortedTeams = rankTeams(teams)
+        
+        self.assertEqual(sortedTeams[0].number, 1)
+        self.assertEqual(sortedTeams[1].number, 2)
 
 if __name__ == '__main__':
     unittest.main()
