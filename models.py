@@ -63,31 +63,31 @@ class Team(DB.Model):
         elim4Penalties=0,
     ):
         """Construct a Team object using a name and URL."""
-        self.number = self.fixInput(number)
-        self.name = self.fixInput(name)
-        self.affiliation = self.fixInput(affiliation)
-        self.round1 = self.fixInput(round1)
-        self.round2 = self.fixInput(round2)
-        self.round3 = self.fixInput(round3)
-        self.round4 = self.fixInput(round4)
-        self.round5 = self.fixInput(round5)
-        self.advanceTo4 = self.fixInput(advanceTo4)
-        self.advanceTo5 = self.fixInput(advanceTo5)
-        self.advanceTo6 = self.fixInput(advanceTo6)
-        self.advanceTo7 = self.fixInput(advanceTo7)
-        self.round1Penalties = self.fixInput(round1Penalties)
-        self.round2Penalties = self.fixInput(round2Penalties)
-        self.round3Penalties = self.fixInput(round3Penalties)
-        self.round4Penalties = self.fixInput(round4Penalties)
-        self.round5Penalties = self.fixInput(round5Penalties)
-        self.elim1 = self.fixInput(elim1)
-        self.elim2 = self.fixInput(elim2)
-        self.elim3 = self.fixInput(elim3)
-        self.elim4 = self.fixInput(elim4)
-        self.elim1Penalties = self.fixInput(elim1Penalties)
-        self.elim2Penalties = self.fixInput(elim2Penalties)
-        self.elim3Penalties = self.fixInput(elim3Penalties)
-        self.elim4Penalties = self.fixInput(elim4Penalties)
+        self.number = number
+        self.name = name
+        self.affiliation = affiliation
+        self.round1 = round1
+        self.round2 = round2
+        self.round3 = round3
+        self.round4 = round4
+        self.round5 = round5
+        self.advanceTo4 = advanceTo4
+        self.advanceTo5 = advanceTo5
+        self.advanceTo6 = advanceTo6
+        self.advanceTo7 = advanceTo7
+        self.round1Penalties = round1Penalties
+        self.round2Penalties = round2Penalties
+        self.round3Penalties = round3Penalties
+        self.round4Penalties = round4Penalties
+        self.round5Penalties = round5Penalties
+        self.elim1 = elim1
+        self.elim2 = elim2
+        self.elim3 = elim3
+        self.elim4 = elim4
+        self.elim1Penalties = elim1Penalties
+        self.elim2Penalties = elim2Penalties
+        self.elim3Penalties = elim3Penalties
+        self.elim4Penalties = elim4Penalties
         self.sortScores()
 
     class Score:
@@ -137,13 +137,6 @@ class Team(DB.Model):
     def isAdvancingToRound(self, roundNumber):
         advances = [self.advanceTo4, self.advanceTo5, self.advanceTo6, self.advanceTo7]
         return advances[roundNumber-6] == True
-        
-    def fixInput(self, data):
-        """Convert unicode data to ASCII."""
-        if isinstance(data, str):
-            return data.encode('ascii', 'ignore')
-        else:
-            return data
 
     @staticmethod
     def default_to_zero(number):
