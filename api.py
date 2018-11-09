@@ -26,15 +26,33 @@ def getTeams():
         # Get the data from the database
         cur.execute(
             '''
-            SELECT TeamNumber, TeamName, Affiliation,
-            Trial1Score, Trial2Score, Trial3Score,
-            Trial4Score, Trial5Score, Trial6Score, Trial7Score,
-            ToRound4, ToRound5,
-            ToRound6, ToRound7,
-            Trial1PenaltyCount, Trial2PenaltyCount, 
-            Trial3PenaltyCount, Trial4PenaltyCount,
-            Trial5PenaltyCount, Trial6PenaltyCount,
-            Trial7PenaltyCount
+            SELECT TeamNumber, 
+            TeamName, 
+            Affiliation,
+            Trial1Score, 
+            Trial2Score, 
+            Trial3Score,
+            Trial4Score, 
+            Trial5Score,
+            Trial6Score,
+            Trial7Score,
+            ToRound4, 
+            ToRound5,
+            ToRound6, 
+            ToRound7,
+            Trial1PenaltyCount, 
+            Trial2PenaltyCount, 
+            Trial3PenaltyCount, 
+            Trial4PenaltyCount,
+            Trial5PenaltyCount, 
+            playoffsround1score,
+            playoffsround2score, 
+            playoffsround3score, 
+            playoffsround4score,
+            playoffsround1penaltycount,
+            playoffsround2penaltycount, 
+            playoffsround3penaltycount, 
+            playoffsround4penaltycount
             FROM ScoringSummaryQuery
             ''')
 
@@ -52,17 +70,23 @@ def getTeams():
                 round5=row[7],
                 round6=row[8],
                 round7=row[9],
-                advanceTo4=row[10],
-                advanceTo5=row[11],
-                advanceTo6=row[12],
-                advanceTo7=row[13],
+                advanceTo4=row[10]=='Yes',
+                advanceTo5=row[11]=='Yes',
+                advanceTo6=row[12]=='Yes',
+                advanceTo7=row[13]=='Yes',
                 round1Penalties=row[14],
                 round2Penalties=row[15],
                 round3Penalties=row[16],
                 round4Penalties=row[17],
                 round5Penalties=row[18],
-                round6Penalties=row[19],
-                round7Penalties=row[20], )
+                elim1=row[19],
+                elim2=row[20],
+                elim3=row[21],
+                elim4=row[22],
+                elim1Penalties=row[23],
+                elim2Penalties=row[24],
+                elim3Penalties=row[25],
+                elim4Penalties=row[26] )
 
             # Add the current team to the list of all teams
             teams.append(team)
@@ -88,6 +112,8 @@ teamFields = {
     "round1": fields.Integer,
     "round2": fields.Integer,
     "round3": fields.Integer,
+    "round4": fields.Integer,
+    "round5": fields.Integer,
     "bestScore": fields.Integer,
     "rank": fields.Integer
 }
@@ -135,8 +161,22 @@ class Playoffs(Resource):
             teams,
             key=lambda x: (x.getRoundScore(roundNumber), -x.getRoundPenalties(roundNumber)),
             reverse=True)
+
+class TournamentSettings(Resource):
+
+    """Setup a REST resource for the tournament settings"""
+
+    def get(self):
+        rounds = 3
+        if(APP.config['USE_5_QUAL_ROUNDS']):
+            rounds = 5
+
+        return {'qualifying_rounds': rounds}
+
+
         
 
 # map resource to URL
 API.add_resource(Rankings, '/api/teams')
 API.add_resource(Playoffs, '/api/playoffs/<int:roundNumber>')
+API.add_resource(TournamentSettings, '/api/settings')

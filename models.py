@@ -13,8 +13,6 @@ class Team(DB.Model):
     round3 = DB.Column(DB.Integer)
     round4 = DB.Column(DB.Integer)
     round5 = DB.Column(DB.Integer)
-    round6 = DB.Column(DB.Integer)
-    round7 = DB.Column(DB.Integer)
     advanceTo4 = DB.Column(DB.Boolean)
     advanceTo5 = DB.Column(DB.Boolean)
     advanceTo6 = DB.Column(DB.Boolean)
@@ -24,8 +22,14 @@ class Team(DB.Model):
     round3Penalties = DB.Column(DB.Integer)
     round4Penalties = DB.Column(DB.Integer)
     round5Penalties = DB.Column(DB.Integer)
-    round6Penalties = DB.Column(DB.Integer)
-    round7Penalties = DB.Column(DB.Integer)
+    elim1 = DB.Column(DB.Integer)
+    elim2 = DB.Column(DB.Integer)
+    elim3 = DB.Column(DB.Integer)
+    elim4 = DB.Column(DB.Integer)
+    elim1Penalties = DB.Column(DB.Integer)
+    elim2Penalties = DB.Column(DB.Integer)
+    elim3Penalties = DB.Column(DB.Integer)
+    elim4Penalties = DB.Column(DB.Integer)
 
     # Constructor for the object
     def __init__(
@@ -49,31 +53,41 @@ class Team(DB.Model):
         round3Penalties=0,
         round4Penalties=0,
         round5Penalties=0,
-        round6Penalties=0,
-        round7Penalties=0
+        elim1=0,
+        elim2=0,
+        elim3=0,
+        elim4=0,
+        elim1Penalties=0,
+        elim2Penalties=0,
+        elim3Penalties=0,
+        elim4Penalties=0,
     ):
         """Construct a Team object using a name and URL."""
-        self.number = self.fixInput(number)
-        self.name = self.fixInput(name)
-        self.affiliation = self.fixInput(affiliation)
-        self.round1 = self.fixInput(round1)
-        self.round2 = self.fixInput(round2)
-        self.round3 = self.fixInput(round3)
-        self.round4 = self.fixInput(round4)
-        self.round5 = self.fixInput(round5)
-        self.round6 = self.fixInput(round6)
-        self.round7 = self.fixInput(round7)
-        self.advanceTo4 = self.fixInput(advanceTo4)
-        self.advanceTo5 = self.fixInput(advanceTo5)
-        self.advanceTo6 = self.fixInput(advanceTo6)
-        self.advanceTo7 = self.fixInput(advanceTo7)
-        self.round1Penalties = self.fixInput(round1Penalties)
-        self.round2Penalties = self.fixInput(round2Penalties)
-        self.round3Penalties = self.fixInput(round3Penalties)
-        self.round4Penalties = self.fixInput(round4Penalties)
-        self.round5Penalties = self.fixInput(round5Penalties)
-        self.round6Penalties = self.fixInput(round6Penalties)
-        self.round7Penalties = self.fixInput(round7Penalties)
+        self.number = number
+        self.name = name
+        self.affiliation = affiliation
+        self.round1 = round1
+        self.round2 = round2
+        self.round3 = round3
+        self.round4 = round4
+        self.round5 = round5
+        self.advanceTo4 = advanceTo4
+        self.advanceTo5 = advanceTo5
+        self.advanceTo6 = advanceTo6
+        self.advanceTo7 = advanceTo7
+        self.round1Penalties = round1Penalties
+        self.round2Penalties = round2Penalties
+        self.round3Penalties = round3Penalties
+        self.round4Penalties = round4Penalties
+        self.round5Penalties = round5Penalties
+        self.elim1 = elim1
+        self.elim2 = elim2
+        self.elim3 = elim3
+        self.elim4 = elim4
+        self.elim1Penalties = elim1Penalties
+        self.elim2Penalties = elim2Penalties
+        self.elim3Penalties = elim3Penalties
+        self.elim4Penalties = elim4Penalties
         self.sortScores()
 
     class Score:
@@ -85,7 +99,9 @@ class Team(DB.Model):
     def sortScores(self):
         scores = [self.Score(1, self.round1, self.round1Penalties),
                   self.Score(2, self.round2, self.round2Penalties),
-                  self.Score(3, self.round3, self.round3Penalties)]
+                  self.Score(3, self.round3, self.round3Penalties),
+                  self.Score(4, self.round4, self.round4Penalties),
+                  self.Score(5, self.round5, self.round5Penalties)]
         sorted_scores = sorted(
             scores,
             key=lambda x: (x.score, -x.penalties),
@@ -93,16 +109,16 @@ class Team(DB.Model):
 
         self.bestScore = sorted_scores[0].score
         self.bestScorePenalties = sorted_scores[0].penalties
-
+        
         self.secondBestScore = sorted_scores[1].score
         self.secondBestScorePenalties = sorted_scores[1].penalties
 
         self.worstScore = sorted_scores[2].score
         self.worstScorePenalties = sorted_scores[2].penalties
-        
+
     def getRoundScore(self, roundNumber):
-        scores = [self.round1, self.round2, self.round3, self.round4, self.round5, self.round6, self.round7]
-        return scores[roundNumber-1]
+        scores = [self.round1, self.round2, self.round3, self.round4, self.round5, self.elim1, self.elim2, self.elim3, self.elim4]
+        return scores[roundNumber-1] or 0
 
     def getRoundPenalties(self, roundNumber):
         penalties = [
@@ -111,21 +127,16 @@ class Team(DB.Model):
             self.round3Penalties,
             self.round4Penalties,
             self.round5Penalties,
-            self.round6Penalties,
-            self.round7Penalties]
+            self.elim1Penalties,
+            self.elim2Penalties,
+            self.elim3Penalties,
+            self.elim4Penalties]
 
         return self.default_to_zero(penalties[roundNumber-1])
     
     def isAdvancingToRound(self, roundNumber):
         advances = [self.advanceTo4, self.advanceTo5, self.advanceTo6, self.advanceTo7]
-        return advances[roundNumber-4] == 'Yes'
-        
-    def fixInput(self, data):
-        """Convert unicode data to ASCII."""
-        if isinstance(data, unicode):
-            return data.encode('ascii', 'ignore')
-        else:
-            return data
+        return advances[roundNumber-6] == True
 
     @staticmethod
     def default_to_zero(number):

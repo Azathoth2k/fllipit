@@ -22,10 +22,20 @@
                     { "data": "round1", "class": "aligncenter" },
                     { "data": "round2", "class": "aligncenter" },
                     { "data": "round3", "class": "aligncenter" },
+                    { "data": "round4", "class": "aligncenter" },
+                    { "data": "round5", "class": "aligncenter" },
                     { "data": "bestScore", "class": "aligncenter" }
                 ],
                 "info": false
             });
+
+            $.ajax({
+                "url": "api/settings",
+                "success": function(data) {
+                    myTable.column(7).visible(data.qualifying_rounds == 5);
+                    myTable.column(8).visible(data.qualifying_rounds == 5);
+                }
+            })
 
             // Set up the page looping
             var page = 1;
@@ -46,6 +56,18 @@
                 myTable.page(page).draw(false);
                 page++;
             }, 10000);
+
+            $('a#toggle-columns').on( 'click', function (e) {
+                e.preventDefault();
+ 
+                // Get the column API object
+                var columnRound4 = myTable.column(7);
+                var columnRound5 = myTable.column(8);
+
+                // Toggle the visibility
+                columnRound4.visible( ! columnRound4.visible() );
+                columnRound5.visible( ! columnRound5.visible() );
+            } );
         });
     </script>
 {% endblock %}
@@ -62,6 +84,8 @@
                     <th>Round 1</th>
                     <th>Round 2</th>
                     <th>Round 3</th>
+                    <th>Round 4</th>
+                    <th>Round 5</th>
                     <th>Best</th>
                 </thead>
             </table>
