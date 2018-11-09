@@ -118,7 +118,7 @@ class Team(DB.Model):
 
     def getRoundScore(self, roundNumber):
         scores = [self.round1, self.round2, self.round3, self.round4, self.round5, self.elim1, self.elim2, self.elim3, self.elim4]
-        return scores[roundNumber-1]
+        return scores[roundNumber-1] or 0
 
     def getRoundPenalties(self, roundNumber):
         penalties = [
